@@ -26,3 +26,4 @@ jobs:
           echo $JIRA_URL
           RELEASE_NUMBER=$(curl --request GET --basic --user ${{ inputs.SVC_JIRA_USERNAME }}:${{ inputs.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions')
           echo $RELEASE_NUMBER
+        shell: bash
