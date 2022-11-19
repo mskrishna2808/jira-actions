@@ -1,0 +1,28 @@
+name : Testing S3 actions
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Testing_sonarqube_report:
+    name: Uploading objects into s3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      # - name: coping readme file to s3 bucket
+      #   run : aws s3 cp README.md s3://mskrishna2808
+      # - name: coping text file to s3 bucket
+      #   run : aws s3 cp release.txt s3://mskrishna2808
+      - name: jira fix version
+        id: jira_fix_version
+        run: |
+          JIRA_URL="https://devopsexpert.atlassian.net/rest/api/latest/issue/DEV-1?fields=fixversions"
+          echo $JIRA_URL
+          RELEASE_NUMBER=$(curl --request GET --basic --user ${{ inputs.SVC_JIRA_USERNAME }}:${{ inputs.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions')
+          echo $RELEASE_NUMBER
