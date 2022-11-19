@@ -29,7 +29,7 @@ jobs:
           echo "======================================================================================"
           echo $JIRA_URL
           echo "======================================================================================"
-          RELEASE_NUMBER=$(curl --request GET --basic --user ${{ secrets.SVC_JIRA_USERNAME }}:${{ secrets.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions')
+          RELEASE_NUMBER=$(curl --request GET --basic --user ${{ secrets.SVC_JIRA_USERNAME }}:${{ secrets.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions.0.self.name')
           echo "======================================================================================"
           echo $RELEASE_NUMBER
           echo "======================================================================================"
