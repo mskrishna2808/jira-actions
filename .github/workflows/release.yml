@@ -22,8 +22,8 @@ jobs:
       - name: jira fix version
         id: jira_fix_version
         run: |
-          apt update -y
-          apt install jq -y
+          sudo apt update -y
+          sudo apt install jq -y
           echo "======================================================================================"
           JIRA_URL="https://devopsexpert.atlassian.net/rest/api/latest/issue/DEV-1?fields=fixVersions"
           echo "======================================================================================"
