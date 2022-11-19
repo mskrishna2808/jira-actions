@@ -22,8 +22,13 @@ jobs:
       - name: jira fix version
         id: jira_fix_version
         run: |
+          echo "======================================================================================"
           JIRA_URL="https://devopsexpert.atlassian.net/rest/api/latest/issue/DEV-1?fields=fixVersions"
+          echo "======================================================================================"
           echo $JIRA_URL
+          echo "======================================================================================"
           RELEASE_NUMBER=$(curl --request GET --basic --user ${{ secrets.SVC_JIRA_USERNAME }}:${{ secrets.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions')
+          echo "======================================================================================"
           echo $RELEASE_NUMBER
+          echo "======================================================================================"
         shell: bash
