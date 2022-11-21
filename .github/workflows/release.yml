@@ -8,6 +8,9 @@ jobs:
   Testing_sonarqube_report:
     name: Uploading objects into s3
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,4 +36,15 @@ jobs:
           echo "======================================================================================"
           echo $RELEASE_NUMBER
           echo "======================================================================================"
-        shell: bash
+
+      - name: Get Release Version
+        run: |
+          echo "running on branch ${GITHUB_REF##*/}"
+          echo "GITHUB_HEAD_REF branch ${GITHUB_HEAD_REF}"
+          echo "input  SOURCE_BRANCH : ${{ github.event.inputs.SOURCE_BRANCH }}"
+          if [ "${{ github.event.inputs.SOURCE_BRANCH }}" != "main" ]; then SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH }} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
+          if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_HEAD_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1);  fi;
+          if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
+          if [ -z "${SOURCE_BRANCH}" ]; then echo "Source branch is missing";exit 1;fi;
+          echo "SOURCE_BRANCH is $SOURCE_BRANCH"
+          echo "SOURCE_BRANCH=$SOURCE_BRANCH" >> $GITHUB_ENV
