@@ -1,12 +1,12 @@
-name : Testing S3 actions
+name : Testing Releases
 
 on:
   push:
     branches: [main]
 
 jobs:
-  Testing_sonarqube_report:
-    name: Uploading objects into s3
+  Testing_Releases:
+    name: Testing Releases
     runs-on: ubuntu-latest
 
     defaults:
