@@ -66,6 +66,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
         with:
-          tag_name: ${{ steps.release-tag.outputs.release-tag-output }}
-          release_name: ${{ steps.release-tag.outputs.release-tag-output }}
+          tag_name: ${{ steps.release-tag-output.outputs.release-tag }}
+          release_name: ${{ steps.release-tag-output.outputs.release-tag }}
           prerelease: true
