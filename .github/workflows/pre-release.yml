@@ -1,4 +1,4 @@
-name : Testing Releases
+name : Testing Pre-Releases
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   Testing_Releases:
-    name: Testing Releases
+    name: Testing Pre-Releases
     runs-on: self-hosted
 
     defaults:
@@ -35,18 +35,6 @@ jobs:
           echo $RELEASE_NUMBER
           echo "======================================================================================"
           echo "::set-output name=release-number::$(echo $RELEASE_NUMBER)"
-
-      # - name: Get Release Version
-      #   run: |
-      #     echo "running on branch ${GITHUB_REF##*/}"
-      #     echo "GITHUB_HEAD_REF branch ${GITHUB_HEAD_REF}"
-      #     echo "input  SOURCE_BRANCH : ${{ github.event.inputs.SOURCE_BRANCH }}"
-      #     if [ "${{ github.event.inputs.SOURCE_BRANCH }}" = "main" ]; then SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH }} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
-      #     if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_HEAD_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1);  fi;
-      #     if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
-      #     if [ -z "${SOURCE_BRANCH}" ]; then echo "Source branch is missing";exit 1;fi;
-      #     echo "SOURCE_BRANCH is $SOURCE_BRANCH"
-      #     echo "SOURCE_BRANCH=$SOURCE_BRANCH" >> $GITHUB_ENV
 
       - name: Creating tags
         id: release-tag-output

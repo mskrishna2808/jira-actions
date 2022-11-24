@@ -1,0 +1,61 @@
+name : Testing Main Releases
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Provide the release tag version'
+        required: true
+
+jobs:
+  Testing_Releases:
+    name: Testing Main Releases
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      # - name: jira fix version
+      #   id: jira_fix_version
+      #   run: |
+      #     # sudo apt update -y
+      #     # sudo apt install jq -y
+      #     echo "======================================================================================"
+      #     JIRA_URL="https://devopsexpert.atlassian.net/rest/api/latest/issue/DEV-1?fields=fixVersions"
+      #     echo "======================================================================================"
+      #     echo $JIRA_URL
+      #     echo "======================================================================================"
+      #     RELEASE_NUMBER=$(curl --request GET --basic --user ${{ secrets.SVC_JIRA_USERNAME }}:${{ secrets.SVC_JIRA_PASSWORD }} --url ${JIRA_URL} | jq '.fields.fixVersions[].name')
+      #     echo "======================================================================================"
+      #     echo $RELEASE_NUMBER
+      #     echo "======================================================================================"
+      #     echo "::set-output name=release-number::$(echo $RELEASE_NUMBER)"
+
+      # - name: Creating tags
+      #   id: release-tag-output
+      #   run: |
+      #     RELEASE_TAG=${{ steps.jira_fix_version.outputs.release-number }}
+      #     echo "::set-output name=release-tag::$(echo $RELEASE_TAG)"
+      #     git tag $RELEASE_TAG
+
+      - name: Creating Releases
+        id: release-tag-final
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
+        with:
+          tag_name: ${{ inputs.release }}
+          release_name: ${{ inputs.release }}
+
+      - name: coping readme file to s3 bucket
+        run : aws s3 cp README.md s3://mskrishna2809
+      - name: coping text file to s3 bucket
+        run : aws s3 cp release.txt s3://mskrishna2809
