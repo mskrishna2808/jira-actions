@@ -68,3 +68,4 @@ jobs:
         with:
           tag_name: ${{ steps.release-tag.outputs.release-tag }}
           release_name: ${{ steps.release-tag.outputs.release-tag }}
+          prerelease: true
