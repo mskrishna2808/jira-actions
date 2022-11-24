@@ -38,14 +38,29 @@ jobs:
           echo $RELEASE_NUMBER
           echo "======================================================================================"
 
-      - name: Get Release Version
+      # - name: Get Release Version
+      #   run: |
+      #     echo "running on branch ${GITHUB_REF##*/}"
+      #     echo "GITHUB_HEAD_REF branch ${GITHUB_HEAD_REF}"
+      #     echo "input  SOURCE_BRANCH : ${{ github.event.inputs.SOURCE_BRANCH }}"
+      #     if [ "${{ github.event.inputs.SOURCE_BRANCH }}" = "main" ]; then SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH }} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
+      #     if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_HEAD_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1);  fi;
+      #     if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
+      #     if [ -z "${SOURCE_BRANCH}" ]; then echo "Source branch is missing";exit 1;fi;
+      #     echo "SOURCE_BRANCH is $SOURCE_BRANCH"
+      #     echo "SOURCE_BRANCH=$SOURCE_BRANCH" >> $GITHUB_ENV
+
+      - name: Creating tags
         run: |
-          echo "running on branch ${GITHUB_REF##*/}"
-          echo "GITHUB_HEAD_REF branch ${GITHUB_HEAD_REF}"
-          echo "input  SOURCE_BRANCH : ${{ github.event.inputs.SOURCE_BRANCH }}"
-          if [ "${{ github.event.inputs.SOURCE_BRANCH }}" = "main" ]; then SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH }} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
-          if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_HEAD_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1);  fi;
-          if [ -z "${SOURCE_BRANCH}" ];then SOURCE_BRANCH=$(echo ${GITHUB_REF##*/} | head -n1 | awk '{print $1;}' | cut -d_ -f1); fi;
-          if [ -z "${SOURCE_BRANCH}" ]; then echo "Source branch is missing";exit 1;fi;
-          echo "SOURCE_BRANCH is $SOURCE_BRANCH"
-          echo "SOURCE_BRANCH=$SOURCE_BRANCH" >> $GITHUB_ENV
+          _DATE_=$(date +%Y%m%d_%H%M%S)
+          TAG_DATE=$(echo "$_DATE_"|sed -e 's/_//g')
+          RELEASE_TAG=$RELEASE_NUMBER.$TAG_DATE
+          git tag $RELEASE_TAG
+
+      - name: Creating Releases
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          release_name: ${{ env.RELEASE_TAG }}
