@@ -7,7 +7,7 @@ on:
 jobs:
   Testing_Releases:
     name: Testing Releases
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     defaults:
       run:
@@ -19,10 +19,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-      # - name: coping readme file to s3 bucket
-      #   run : aws s3 cp README.md s3://mskrishna2808
-      # - name: coping text file to s3 bucket
-      #   run : aws s3 cp release.txt s3://mskrishna2808
+
       - name: jira fix version
         id: jira_fix_version
         run: |
@@ -69,3 +66,8 @@ jobs:
           tag_name: ${{ steps.release-tag-output.outputs.release-tag }}
           release_name: ${{ steps.release-tag-output.outputs.release-tag }}
           prerelease: true
+
+      - name: coping readme file to s3 bucket
+        run : aws s3 cp README.md s3://mskrishna2808
+      - name: coping text file to s3 bucket
+        run : aws s3 cp release.txt s3://mskrishna2808
