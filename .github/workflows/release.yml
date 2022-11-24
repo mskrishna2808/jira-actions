@@ -56,6 +56,7 @@ jobs:
           _DATE_=$(date +%Y%m%d_%H%M%S)
           TAG_DATE=$(echo "$_DATE_"|sed -e 's/_//g')
           RELEASE_TAG=${{ steps.jira_fix_version.outputs.release-number }}.$TAG_DATE
+          echo $RELEASE_TAG >> $GITHUB_ENV
           git tag $RELEASE_TAG
 
       - name: Creating Releases
