@@ -29,7 +29,7 @@ jobs:
           echo "============================================"
           cat release.txt
           echo "============================================"
-          
+
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
         with:
-          tag_name: ${{ inputs.tag }}
+          commit: ${{ inputs.release }}
           release_name: ${{ inputs.release }}
 
       - name: coping readme file to s3 bucket
