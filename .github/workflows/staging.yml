@@ -24,12 +24,12 @@ jobs:
         with:
           ref: '${{ inputs.tag }}'
           fetch-depth: '0'
+          token: '${{ secrets.API_TOKEN }}'
 
       - name: Creating tags
         id: release-tag-output
         run: |
           TAG=${{ inputs.release }}
-          # echo "::set-output name=release-tag::$(echo $TAG)"
           echo "release-tag=$TAG" >> $GITHUB_OUTPUT
           git tag $TAG
           git config user.name github-actions
