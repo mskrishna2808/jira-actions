@@ -7,7 +7,7 @@ on:
         description: 'Provide the release version'
         required: true
       tag:
-        description: 'Provide the pre-release tag'
+        description: 'Provide the release tag'
         required: true
 
 
@@ -34,13 +34,20 @@ jobs:
         with:
           node-version: 16
 
+      - name: Creating tags
+        id: release-tag-output
+        run: |
+          TAG=$(git tag ${{ inputs.release }})
+          RELEASE_TAG=$(echo $TAG)
+          echo "::set-output name=release-tag::$(echo $RELEASE_TAG)"
+
       - name: Creating Releases
         id: release-tag-final
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
         with:
-          tag_name: ${{ inputs.release }}
+          tag_name: ${{ steps.release-tag-output.output.release-tag }}
           release_name: ${{ inputs.release }}
 
       - name: coping readme file to s3 bucket
