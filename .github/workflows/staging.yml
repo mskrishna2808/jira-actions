@@ -37,9 +37,9 @@ jobs:
       - name: Creating tags
         id: release-tag-output
         run: |
-          TAG=$(git tag ${{ inputs.release }})
-          RELEASE_TAG=$(echo $TAG)
-          echo "::set-output name=release-tag::$(echo $RELEASE_TAG)"
+          TAG=${{ inputs.release }}
+          echo "::set-output name=release-tag::$(echo $TAG)"
+          git tag $TAG
 
       - name: Creating Releases
         id: release-tag-final
