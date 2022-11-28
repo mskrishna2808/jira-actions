@@ -1,10 +1,13 @@
-name : Testing Main Releases
+name : staging release testing
 
 on:
   workflow_dispatch:
     inputs:
       release:
         description: 'Provide the release version'
+        required: true
+      tag:
+        description: 'Provide the pre-release tag'
         required: true
 
 jobs:
@@ -16,9 +19,9 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          ref: '${{ inputs.tag }}'
       - uses: actions/setup-node@v2
         with:
           node-version: 16

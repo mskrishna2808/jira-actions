@@ -1,4 +1,4 @@
-name : Testing Pre-Releases
+name : dev release testing
 
 on:
   push:
