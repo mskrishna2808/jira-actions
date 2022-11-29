@@ -1,4 +1,4 @@
-name : dev release testing
+name : build-deploy-to-dev
 
 on:
   push:

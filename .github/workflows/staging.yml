@@ -1,4 +1,4 @@
-name : staging release testing
+name : deploy-staging
 
 on:
   workflow_dispatch:
@@ -52,4 +52,4 @@ jobs:
       - name: coping readme file to s3 bucket
         run : aws s3 cp README.md s3://github-actions-staging-testing
       - name: coping text file to s3 bucket
-        run : aws s3 cp release.txt s3://github-actions-staging-testing
+        run : aws s3 cp file* s3://github-actions-staging-testing
