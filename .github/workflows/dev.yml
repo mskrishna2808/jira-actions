@@ -42,7 +42,7 @@ jobs:
           _DATE_=$(date +%Y%m%d_%H%M%S)
           TAG_DATE=$(echo "$_DATE_"|sed -e 's/_//g')
           RELEASE_TAG=${{ steps.jira_fix_version.outputs.release-number }}.$TAG_DATE
-          echo "::set-output name=release-tag::$(echo $RELEASE_TAG)"
+          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
           git tag $RELEASE_TAG
 
       - name: Creating Releases
