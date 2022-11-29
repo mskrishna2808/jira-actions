@@ -6,7 +6,6 @@ on:
 
     types:
       - completed
-  workflow_dispatch:
     inputs:
       release:
         description: 'Provide the release version'
@@ -14,6 +13,14 @@ on:
       tag:
         description: 'Provide the release tag'
         required: true
+  workflow_dispatch:
+    # inputs:
+    #   release:
+    #     description: 'Provide the release version'
+    #     required: true
+    #   tag:
+    #     description: 'Provide the release tag'
+    #     required: true
 
 
 jobs:
