@@ -28,7 +28,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: stage
     name: Testing Main Releases
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     defaults:
       run:
@@ -63,7 +63,7 @@ jobs:
           tag_name: ${{ steps.release-tag-output.outputs.release-tag }}
           release_name: ${{ inputs.release }}
 
-      - name: coping readme file to s3 bucket
-        run : aws s3 cp README.md s3://github-actions-staging-testing
-      - name: coping text file to s3 bucket
-        run : aws s3 cp file* s3://github-actions-staging-testing
+#       - name: coping readme file to s3 bucket
+#         run : aws s3 cp README.md s3://github-actions-staging-testing
+#       - name: coping text file to s3 bucket
+#         run : aws s3 cp file* s3://github-actions-staging-testing
