@@ -7,7 +7,7 @@ on:
 jobs:
   Testing_Releases:
     name: Testing Pre-Releases
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     defaults:
       run:
@@ -55,7 +55,7 @@ jobs:
           release_name: ${{ steps.release-tag-output.outputs.release-tag }}
           prerelease: true
 
-      - name: coping readme file to s3 bucket
-        run : aws s3 cp README.md s3://github-actions-dev-testing
-      - name: coping text file to s3 bucket
-        run : aws s3 cp file* s3://github-actions-dev-testing
+#       - name: coping readme file to s3 bucket
+#         run : aws s3 cp README.md s3://github-actions-dev-testing
+#       - name: coping text file to s3 bucket
+#         run : aws s3 cp file* s3://github-actions-dev-testing
